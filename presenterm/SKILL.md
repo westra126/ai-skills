@@ -80,17 +80,19 @@ Create a separate `.md` file (e.g., `presentation-notes.md`) containing all spea
 ```markdown
 # Speaker Notes — Presentation Title
 
-## Slide 1: Slide Title
-Talking points for the first slide...
+## Slide 1: Portada (generada automáticamente por presenterm)
+Brief speaking points to introduce the presentation...
 
 ## Slide 2: Slide Title
-Talking points for the second slide...
+Talking points for the first explicit slide (e.g., Agenda)...
 
 ## Slide 3: Slide Title
-Talking points for the third slide...
+Talking points for the second explicit slide...
 ```
 
 **Rules:**
+- **Slide 1 is the auto-generated title slide (portada)** created by presenterm from the YAML frontmatter. Provide a brief note for it (e.g., "Presentar título, autores y contexto del trabajo"). The notes file's Slide 1 always corresponds to the title slide, never to the first `# heading` in the markdown file.
+- Slide 2 corresponds to the first explicit slide in the `.md` file (after the frontmatter `---`), Slide 3 to the second, and so on.
 - Extract the exact same text from each `speaker_note` block in the presentation
 - Include the slide number and title as a heading for each section
 - Preserve all content verbatim (do not summarize or modify)
@@ -149,20 +151,20 @@ options:
   implicit_slide_ends: false
   end_slide_shorthand: false
   command_prefix: ""
-  incremental_lists: false
   auto_render_languages:
     - mermaid
 ---
 ```
 
-### Slide Titles (Setext Headers)
+### Slide Titles (ATX Headers)
+
+**Always use `#` ATX headers** for slide titles:
 
 ```markdown
-Slide Title Here
-================
+# Slide Title Here
 ```
 
-Or use `# H1` if `h1_slide_titles: true` is set.
+Setext headers (`====`) are not used.
 
 ### Comment Commands
 
@@ -525,9 +527,9 @@ presenterm demo.md --listen-speaker-notes
 1. **Keep slides concise**: Terminal screens are limited. Use 5-8 bullet points max per slide.
 2. **Avoid wide tables**: Tables with more than 2-3 short columns break when terminal wraps text. Use bullet lists, column layouts, or split into multiple small tables instead.
 3. **Use column layouts** for code + explanation side by side.
-4. **Use `<!-- pause -->`** to reveal points progressively during talks.
-5. **Use `<!-- incremental_lists: true -->`** for bullet-by-bullet reveals.
-6. **Use `<!-- jump_to_middle -->`** with setext headers for section divider slides.
+4. **Always show the full heading hierarchy on every slide**: use `# Section`, `## Subsection`, and `### Subsubsection` so the audience always knows where they are. Never create empty section divider slides. Merge the section intro text into the first substantive slide of that section.
+5. **Never use `<!-- incremental_lists: true -->`**: all bullet points must be visible at once on each slide.
+6. **Use `#` ATX headers** for slide titles, `##` for subtopics within a section slide.
 7. **Set a theme** in front matter for consistent look.
 8. **Test with `--validate-snippets`** if using executable code.
 9. **Use speaker notes** for talking points.
@@ -565,19 +567,15 @@ options:
     - mermaid
 ---
 
-<!-- jump_to_middle -->
 
-What is Rust?
-=============
+
+# What is Rust?
 
 <!-- speaker_note: Welcome everyone. Today we'll explore Rust, a modern systems programming language that's gaining rapid adoption. -->
 
 <!-- end_slide -->
 
-Key Features
-============
-
-<!-- incremental_lists: true -->
+# Key Features
 
 - Memory safety without garbage collection
 - Zero-cost abstractions
@@ -594,8 +592,7 @@ speaker_note: |
 
 <!-- end_slide -->
 
-Hello World
-===========
+# Hello World
 
 <!-- column_layout: [1, 1] -->
 
@@ -611,7 +608,7 @@ fn main() {
 
 <!-- column: 1 -->
 
-<!-- jump_to_middle -->
+
 
 Output:
 ```
@@ -624,8 +621,7 @@ Hello, world!
 
 <!-- end_slide -->
 
-Architecture
-============
+# Architecture
 
 ```mermaid +render +width:70%
 graph TD
@@ -638,10 +634,8 @@ graph TD
 
 <!-- end_slide -->
 
-<!-- jump_to_middle -->
 
-Thank You!
-==========
+# Thank You!
 
 Questions?
 
